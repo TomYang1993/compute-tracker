@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-18T22:51:01+00:00",
+ "updated": "2026-11-18T22:51:25+00:00",
  "source": "gpuhunt 0.1.35 + catalog.toml",
  "summary": {
   "A10 4GB": {
@@ -1049,6 +1049,20 @@
     "location": "pl-14",
     "instance": "c49f5fca-c336-432a-aa27-4781763a7a87",
     "strong_cpu": false
+   },
+   "cheapest_spot": {
+    "gpu": "RTX4070TiSUPER",
+    "vram": 16,
+    "provider": "vastai",
+    "kind": "marketplace",
+    "spot": true,
+    "gpu_count": 2,
+    "price_gpu_hr": 0.2092,
+    "vcpu_per_gpu": 18.0,
+    "ram_per_gpu": 16,
+    "location": "cn-hebei",
+    "instance": "42324395",
+    "strong_cpu": false
    }
   },
   "RTX4080SUPER 32GB": {
@@ -1706,12 +1720,12 @@
     "provider": "vastai",
     "kind": "marketplace",
     "spot": true,
-    "gpu_count": 1,
+    "gpu_count": 2,
     "price_gpu_hr": 0.7214,
     "vcpu_per_gpu": 16.0,
-    "ram_per_gpu": 24,
+    "ram_per_gpu": 48,
     "location": "jp-japan",
-    "instance": "54193557",
+    "instance": "54193562",
     "strong_cpu": false
    },
    "cheapest_on_demand": {
@@ -3563,20 +3577,6 @@
   {
    "gpu": "B200",
    "vram": 180,
-   "provider": "lambdalabs",
-   "kind": "neocloud",
-   "spot": false,
-   "gpu_count": 1,
-   "price_gpu_hr": 7.99,
-   "vcpu_per_gpu": 26.0,
-   "ram_per_gpu": 387,
-   "location": "asia-northeast-1",
-   "instance": "gpu_1x_b200_sxm6",
-   "strong_cpu": true
-  },
-  {
-   "gpu": "B200",
-   "vram": 180,
    "provider": "runpod",
    "kind": "neocloud",
    "spot": false,
@@ -3586,6 +3586,20 @@
    "ram_per_gpu": 283,
    "location": "EU-RO-1",
    "instance": "NVIDIA B200",
+   "strong_cpu": true
+  },
+  {
+   "gpu": "B200",
+   "vram": 180,
+   "provider": "lambdalabs",
+   "kind": "neocloud",
+   "spot": false,
+   "gpu_count": 1,
+   "price_gpu_hr": 7.99,
+   "vcpu_per_gpu": 26.0,
+   "ram_per_gpu": 387,
+   "location": "asia-northeast-1",
+   "instance": "gpu_1x_b200_sxm6",
    "strong_cpu": true
   },
   {
@@ -6951,6 +6965,34 @@
    "strong_cpu": false
   },
   {
+   "gpu": "RTX4070TiSUPER",
+   "vram": 16,
+   "provider": "vastai",
+   "kind": "marketplace",
+   "spot": false,
+   "gpu_count": 2,
+   "price_gpu_hr": 0.2092,
+   "vcpu_per_gpu": 18.0,
+   "ram_per_gpu": 16,
+   "location": "cn-hebei",
+   "instance": "42324395",
+   "strong_cpu": false
+  },
+  {
+   "gpu": "RTX4070TiSUPER",
+   "vram": 16,
+   "provider": "vastai",
+   "kind": "marketplace",
+   "spot": true,
+   "gpu_count": 2,
+   "price_gpu_hr": 0.2092,
+   "vcpu_per_gpu": 18.0,
+   "ram_per_gpu": 16,
+   "location": "cn-hebei",
+   "instance": "42324395",
+   "strong_cpu": false
+  },
+  {
    "gpu": "RTX4080SUPER",
    "vram": 32,
    "provider": "vastai",
@@ -8689,6 +8731,34 @@
   {
    "gpu": "RTXPRO4000",
    "vram": 24,
+   "provider": "vastai",
+   "kind": "marketplace",
+   "spot": true,
+   "gpu_count": 1,
+   "price_gpu_hr": 0.3645,
+   "vcpu_per_gpu": 16.0,
+   "ram_per_gpu": 7,
+   "location": "ca-ontario",
+   "instance": "59261914",
+   "strong_cpu": false
+  },
+  {
+   "gpu": "RTXPRO4000",
+   "vram": 24,
+   "provider": "vastai",
+   "kind": "marketplace",
+   "spot": false,
+   "gpu_count": 1,
+   "price_gpu_hr": 0.4045,
+   "vcpu_per_gpu": 16.0,
+   "ram_per_gpu": 7,
+   "location": "ca-ontario",
+   "instance": "59261914",
+   "strong_cpu": false
+  },
+  {
+   "gpu": "RTXPRO4000",
+   "vram": 24,
    "provider": "runpod",
    "kind": "neocloud",
    "spot": false,
@@ -10120,12 +10190,12 @@
    "provider": "vastai",
    "kind": "marketplace",
    "spot": true,
-   "gpu_count": 1,
+   "gpu_count": 2,
    "price_gpu_hr": 0.7214,
    "vcpu_per_gpu": 16.0,
-   "ram_per_gpu": 24,
+   "ram_per_gpu": 48,
    "location": "jp-japan",
-   "instance": "54193557",
+   "instance": "54193562",
    "strong_cpu": false
   },
   {
@@ -10134,12 +10204,12 @@
    "provider": "vastai",
    "kind": "marketplace",
    "spot": true,
-   "gpu_count": 2,
-   "price_gpu_hr": 0.7214,
+   "gpu_count": 1,
+   "price_gpu_hr": 0.773,
    "vcpu_per_gpu": 16.0,
-   "ram_per_gpu": 48,
+   "ram_per_gpu": 24,
    "location": "jp-japan",
-   "instance": "54193562",
+   "instance": "54166465",
    "strong_cpu": false
   },
   {
@@ -10383,20 +10453,6 @@
   {
    "gpu": "T4",
    "vram": 16,
-   "provider": "azure",
-   "kind": "hyperscaler",
-   "spot": false,
-   "gpu_count": 1,
-   "price_gpu_hr": 0.526,
-   "vcpu_per_gpu": 4.0,
-   "ram_per_gpu": 28,
-   "location": "westus3",
-   "instance": "Standard_NC4as_T4_v3",
-   "strong_cpu": false
-  },
-  {
-   "gpu": "T4",
-   "vram": 16,
    "provider": "aws",
    "kind": "hyperscaler",
    "spot": false,
@@ -10406,6 +10462,20 @@
    "ram_per_gpu": 16,
    "location": "us-east-1",
    "instance": "g4dn.xlarge",
+   "strong_cpu": false
+  },
+  {
+   "gpu": "T4",
+   "vram": 16,
+   "provider": "azure",
+   "kind": "hyperscaler",
+   "spot": false,
+   "gpu_count": 1,
+   "price_gpu_hr": 0.526,
+   "vcpu_per_gpu": 4.0,
+   "ram_per_gpu": 28,
+   "location": "westus3",
+   "instance": "Standard_NC4as_T4_v3",
    "strong_cpu": false
   },
   {
@@ -10904,12 +10974,26 @@
    "provider": "vastai",
    "kind": "marketplace",
    "spot": true,
-   "gpu_count": 2,
-   "price_gpu_hr": 0.0861,
+   "gpu_count": 1,
+   "price_gpu_hr": 0.0997,
    "vcpu_per_gpu": 10.0,
-   "ram_per_gpu": 8,
+   "ram_per_gpu": 6,
    "location": "us-washington",
-   "instance": "38451100",
+   "instance": "58437628",
+   "strong_cpu": false
+  },
+  {
+   "gpu": "V100",
+   "vram": 32,
+   "provider": "vastai",
+   "kind": "marketplace",
+   "spot": true,
+   "gpu_count": 2,
+   "price_gpu_hr": 0.1032,
+   "vcpu_per_gpu": 10.0,
+   "ram_per_gpu": 12,
+   "location": "us-washington",
+   "instance": "58459640",
    "strong_cpu": false
   },
   {
@@ -10919,25 +11003,11 @@
    "kind": "marketplace",
    "spot": false,
    "gpu_count": 2,
-   "price_gpu_hr": 0.0994,
+   "price_gpu_hr": 0.1045,
    "vcpu_per_gpu": 10.0,
-   "ram_per_gpu": 8,
+   "ram_per_gpu": 12,
    "location": "us-washington",
-   "instance": "38451100",
-   "strong_cpu": false
-  },
-  {
-   "gpu": "V100",
-   "vram": 32,
-   "provider": "vastai",
-   "kind": "marketplace",
-   "spot": true,
-   "gpu_count": 1,
-   "price_gpu_hr": 0.0997,
-   "vcpu_per_gpu": 10.0,
-   "ram_per_gpu": 6,
-   "location": "us-washington",
-   "instance": "58437628",
+   "instance": "60117186",
    "strong_cpu": false
   },
   {
