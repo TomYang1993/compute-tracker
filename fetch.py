@@ -14,7 +14,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).parent
 DOCS = ROOT / "docs"
-CSDK_URL = "https://raw.githubusercontent.com/computesdk/benchmarks/refs/heads/master/results/burst_tti/latest.json"
+CSDK_URL = (  # ponytail: ComputeSDK moved results to its gated platform on 2026-11-18; last public snapshot, swap when a public feed exists
+    "https://raw.githubusercontent.com/computesdk/benchmarks/86db0e059ab3bb43918e736792b307e39793a190/results/burst_tti/latest.json")
 KIND = {"aws": "hyperscaler", "gcp": "hyperscaler", "azure": "hyperscaler", "oci": "hyperscaler",
         "vastai": "marketplace", "lium": "marketplace", "daytona": "sandbox", "modal": "sandbox"}
 STRONG_VCPU, STRONG_RAM = 16, 128  # per GPU: enough CPU to keep the GPU fed

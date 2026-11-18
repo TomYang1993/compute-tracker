@@ -10,7 +10,7 @@ python3 -m http.server 8742 -d docs
 ```
 
 - GPU prices: [gpuhunt](https://github.com/dstackai/gpuhunt) + `[[gpu_manual]]` in `catalog.toml`.
-- Sandboxes: `[sandbox.*]` in `catalog.toml` (every row has `source` and `checked`) + [ComputeSDK](https://www.computesdk.com/benchmarks/sandboxes) startup times.
+- Sandboxes: `[sandbox.*]` in `catalog.toml` (every row has `source` and `checked`) + [ComputeSDK](https://www.computesdk.com/benchmarks/sandboxes) startup times (last public snapshot, 2026-11-13; their results moved to a gated platform).
 - `.github/workflows/fetch.yml` refreshes daily and commits only when data changed.
 
 See `DESIGN.md` for the measured-runs plan.
