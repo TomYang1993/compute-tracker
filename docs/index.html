@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Compute Tracker</title>
+<meta name="description" content="Cheapest GPU clouds and agent sandboxes, updated daily. Free JSON for humans and agents.">
+<link rel="alternate" type="text/plain" href="llms.txt" title="llms.txt">
+<style>
+:root{--bg:#fafaf9;--fg:#1c1917;--mute:#78716c;--line:#e7e5e4;--card:#fff;--acc:#2563eb;--good:#16a34a;--warn:#b45309}
+@media (prefers-color-scheme:dark){:root{--bg:#0c0a09;--fg:#e7e5e4;--mute:#a8a29e;--line:#292524;--card:#1c1917;--acc:#60a5fa;--good:#4ade80;--warn:#fbbf24}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.45 system-ui,-apple-system,sans-serif}
+header{padding:16px;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:8px 20px;align-items:baseline}
+h1{font-size:24px;margin:0}h2{font-size:18px;margin:20px 16px 8px}h2 .mute{font-size:13px;font-weight:400}
+.mute{color:var(--mute)}
+nav button{background:none;border:0;border-bottom:2px solid transparent;padding:6px 2px;margin-right:14px;color:var(--mute);font:inherit;cursor:pointer}
+nav button.on{color:var(--fg);border-color:var(--acc)}
+.bar{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;padding:12px 16px}
+select{font:inherit;padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--fg)}
+label{white-space:nowrap}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px;padding:0 16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+.card b{font-size:18px}.card div{margin-top:4px}
+.price{font-variant-numeric:tabular-nums;font-weight:600}
+.wrap{padding:0 16px 40px;overflow-x:auto}
+table{border-collapse:collapse;width:100%;background:var(--card)}
+th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{position:sticky;top:0;background:var(--card);font-weight:600;font-size:12px;color:var(--mute);cursor:pointer;user-select:none}
+td.n{font-variant-numeric:tabular-nums;white-space:nowrap}
+a{color:var(--acc);text-decoration:none}a:hover{text-decoration:underline}
+.tag{font-size:11px;padding:1px 6px;border-radius:9px;border:1px solid currentColor;margin-left:6px;white-space:nowrap}
+.good{color:var(--good)}.warn{color:var(--warn)}
+p.note{padding:0 16px;max-width:760px}
+code{font-size:12px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Compute Tracker</h1>
+  <span class="mute">Cheapest GPU clouds and agent sandboxes, updated daily.</span>
+  <span class="mute" id="meta">loading…</span>
+  <nav><button data-tab="gpu" class="on">GPUs</button><button data-tab="sb">Sandboxes</button><button data-tab="new">New entrants</button><button data-tab="api">For agents</button></nav>
+</header>
+
+<section id="gpu">
+  <h2>Best picks <span class="mute">· on-demand, not a marketplace host, ≥16 vCPU and ≥128 GB RAM per GPU</span></h2>
+  <div class="cards" id="picks"></div>
+  <h2>All offers <span class="mute">· cheapest per provider, GPU count and pricing type</span></h2>
+  <div class="bar">
+    <select id="g"></select>
+    <select id="spot"><option value="od">On-demand</option><option value="spot">Spot / preemptible</option><option value="">Both</option></select>
+    <select id="cnt"><option value="1">Any GPU count</option><option value="2">2+ GPUs</option><option value="8">8 GPUs</option></select>
+    <label><input type="checkbox" id="strong"> Strong CPU only</label>
+    <label><input type="checkbox" id="nomkt"> Hide marketplace hosts</label>
+    <span class="mute" id="count"></span>
+  </div>
+  <div class="wrap"><table>
+    <thead><tr><th data-k="provider">Provider</th><th data-k="price_gpu_hr">$/GPU-hr ▴</th><th data-k="gpu_count">GPUs</th><th data-k="vcpu_per_gpu">vCPU/GPU</th><th data-k="ram_per_gpu">RAM/GPU</th><th data-k="location">Location</th><th data-k="instance">Instance</th></tr></thead>
+    <tbody id="rows"></tbody>
+  </table></div>
+  <p class="note mute">List prices from <a href="https://github.com/dstackai/gpuhunt">gpuhunt</a> plus hand-checked entries. List price is not what a job costs: measured runs are coming. Marketplace hosts (Vast.ai, Lium) vary in reliability.</p>
+</section>
+
+<section id="sb" hidden>
+  <div class="wrap"><table>
+    <thead><tr><th>Provider</th><th>$/hr</th><th>Price basis</th><th>Startup (median)</th><th>Isolation</th><th>GPU</th><th>Billing</th><th>Free tier</th><th>MCP</th></tr></thead>
+    <tbody id="sbrows"></tbody>
+  </table></div>
+  <p class="note mute">$/hr is computed for a 2 vCPU / 4 GiB box when the provider publishes per-vCPU and per-GiB rates; other rows show the listed price and its shape. Startup times come from <a href="https://www.computesdk.com/benchmarks/sandboxes">ComputeSDK</a>'s weekly run (<span id="csdk"></span>).</p>
+</section>
+
+<section id="new" hidden>
+  <h2>In ComputeSDK's benchmark but not yet in this catalog</h2>
+  <p class="note" id="untracked"></p>
+  <p class="note mute">New sandbox companies launch weekly. Know one we're missing? It goes here first, then into the catalog once pricing is checked.</p>
+</section>
+
+<section id="api" hidden>
+  <p class="note">Everything on this page is free JSON, refreshed daily:</p>
+  <ul class="note">
+    <li><a href="gpu.json"><code>gpu.json</code></a>: <code>summary</code> (best pick / cheapest on-demand / cheapest spot per GPU) and every <code>offers</code> row</li>
+    <li><a href="sandboxes.json"><code>sandboxes.json</code></a>: sandbox catalog with $/hr, startup time, free tier, MCP</li>
+    <li><a href="llms.txt"><code>llms.txt</code></a>: how agents should use this data</li>
+  </ul>
+</section>
+
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const usd = v => v == null ? "?" : "$" + (v < 0.1 ? v.toFixed(4) : v.toFixed(2));
+const MAIN = ["B200 180GB","H200 141GB","H100 80GB","A100 80GB","L40S 48GB","RTX4090 24GB","L4 24GB"];
+let G, sortK = "price_gpu_hr", sortDir = 1;
+
+document.querySelectorAll("nav button").forEach(b => b.onclick = () => {
+  document.querySelectorAll("nav button").forEach(x => x.classList.toggle("on", x === b));
+  document.querySelectorAll("body > section").forEach(s => s.hidden = s.id !== b.dataset.tab);
+});
+
+const line = (label, r) => r ? `<div>${label}: <span class="price">${usd(r.price_gpu_hr)}</span> ${esc(r.provider)}${r.gpu_count > 1 ? " ×" + r.gpu_count : ""}</div>` : `<div class="mute">${label}: none</div>`;
+
+function renderGpu() {
+  const key = $("#g").value, spot = $("#spot").value, cnt = +$("#cnt").value;
+  let rows = G.offers.filter(r => `${r.gpu} ${r.vram}GB` === key
+    && (!spot || (spot === "spot") === r.spot) && r.gpu_count >= cnt
+    && (!$("#strong").checked || r.strong_cpu) && (!$("#nomkt").checked || r.kind !== "marketplace"));
+  rows.sort((a, b) => ((a[sortK] ?? Infinity) > (b[sortK] ?? Infinity) ? 1 : -1) * sortDir);
+  $("#count").textContent = rows.length + " offers";
+  $("#rows").innerHTML = rows.map(r => `<tr><td>${esc(r.provider)}${r.kind === "marketplace" ? '<span class="tag warn">marketplace</span>' : ""}${r.kind === "sandbox" ? '<span class="tag">sandbox</span>' : ""}${r.strong_cpu ? '<span class="tag good">strong CPU</span>' : ""}</td>
+    <td class="n price">${usd(r.price_gpu_hr)}</td><td class="n">${r.gpu_count}</td><td class="n">${r.vcpu_per_gpu ?? "?"}</td>
+    <td class="n">${r.ram_per_gpu != null ? r.ram_per_gpu + " GB" : "?"}</td><td>${esc(r.location ?? "")}</td><td class="mute">${esc(r.instance ?? "")}</td></tr>`).join("");
+}
+
+fetch("gpu.json").then(r => r.json()).then(g => {
+  G = g;
+  $("#meta").textContent = "updated " + g.updated.slice(0, 16).replace("T", " ") + " UTC";
+  $("#picks").innerHTML = MAIN.filter(k => g.summary[k]).map(k => { const s = g.summary[k];
+    return `<div class="card"><b>${esc(k)}</b>${line("Best pick", s.best_pick)}${line("Cheapest on-demand", s.cheapest_on_demand)}${line("Cheapest spot", s.cheapest_spot)}</div>`; }).join("");
+  const keys = Object.keys(g.summary).sort((a, b) => (MAIN.indexOf(a) + 1 || 99) - (MAIN.indexOf(b) + 1 || 99) || a.localeCompare(b));
+  $("#g").innerHTML = keys.map(k => `<option>${esc(k)}</option>`).join("");
+  $("#g").value = "H100 80GB";
+  ["#g","#spot","#cnt","#strong","#nomkt"].forEach(s => $(s).onchange = renderGpu);
+  document.querySelectorAll("#gpu th").forEach(th => th.onclick = () => {
+    sortDir = th.dataset.k === sortK ? -sortDir : 1; sortK = th.dataset.k; renderGpu(); });
+  renderGpu();
+});
+
+fetch("sandboxes.json").then(r => r.json()).then(s => {
+  $("#csdk").textContent = s.computesdk_run ? s.computesdk_run.slice(0, 10) : "n/a";
+  $("#sbrows").innerHTML = s.sandboxes.map(r => `<tr><td><a href="${esc(r.url)}" rel="nofollow">${esc(r.name)}</a>${r.status ? `<span class="tag warn">${esc(r.status)}</span>` : ""}${r.note ? `<div class="mute">${esc(r.note)}</div>` : ""}</td>
+    <td class="n price">${usd(r.cost_hr)}</td><td class="mute">${esc(r.cost_shape === "2c4g" ? "2 vCPU / 4 GiB" : r.cost_shape ?? "not published")}</td>
+    <td class="n">${r.tti_median_ms != null ? Math.round(r.tti_median_ms) + " ms" : "?"}</td><td>${esc(r.isolation)}</td><td>${esc(r.gpu)}</td>
+    <td>${esc(r.billing)}</td><td>${esc(r.free)}</td><td>${esc(r.mcp)}</td></tr>`).join("");
+  $("#untracked").innerHTML = s.untracked_in_computesdk.map(esc).join(", ") || "none";
+});
+</script>
+</body>
+</html>

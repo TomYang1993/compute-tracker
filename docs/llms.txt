@@ -1,0 +1,12 @@
+# Compute Tracker
+
+> Cheapest GPU clouds and AI-agent sandboxes, refreshed daily. Free JSON, no key.
+
+## Data
+- [gpu.json](gpu.json): GPU rental list prices per GPU-hour. `summary["H100 80GB"]` has `best_pick` (on-demand, not a marketplace host, >=16 vCPU and >=128 GB RAM per GPU), `cheapest_on_demand`, `cheapest_spot`. `offers` has every row: provider, kind (neocloud | hyperscaler | marketplace | sandbox), spot, gpu_count, price_gpu_hr, vcpu_per_gpu, ram_per_gpu, location, instance.
+- [sandboxes.json](sandboxes.json): agent sandbox providers. `cost_hr` is computed for 2 vCPU / 4 GiB when `cost_shape` is "2c4g"; otherwise it is a listed price for the shape named in `cost_shape`. `tti_median_ms` is time-to-interactive from ComputeSDK's weekly benchmark. Also: isolation, gpu, billing, free, mcp, source, checked.
+
+## Caveats
+- Prices are list prices, not measured job cost. Check `updated` before relying on them.
+- Fields marked "?" are unconfirmed.
+- Sources: gpuhunt (dstack), ComputeSDK benchmarks, hand-checked catalog with a source URL per row.

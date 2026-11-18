@@ -1,0 +1,264 @@
+# Hand-curated facts that no free API publishes. Every row cites a source and a check date.
+# Price fields (pick one form):
+#   vcpu_hr + gib_hr  -> cost is computed for the standard 2 vCPU / 4 GiB shape
+#   flat_hr + shape   -> price as listed for that shape (marked when shape != 2c4g)
+# Anything unknown stays out. "?" in prose means unconfirmed.
+
+[sandbox.e2b]
+name = "E2B"
+url = "https://e2b.dev"
+isolation = "Firecracker"
+gpu = "no"
+billing = "per-second while running"
+vcpu_hr = 0.0504
+gib_hr = 0.0162
+free = "$100 one-time credit; Pro $150/mo for 24h sessions"
+mcp = "MCP server repo (official?)"
+computesdk = "e2b"
+source = "https://upstash.com/blog/ai-agent-sandbox-providers-compared-2026"
+checked = "2026-11-17"
+
+[sandbox.daytona]
+name = "Daytona"
+url = "https://www.daytona.io"
+isolation = "Container / VM"
+gpu = "yes, up to 8 per sandbox (RTX 4090 to B300, MI355X)"
+billing = "per-second"
+vcpu_hr = 0.0504
+gib_hr = 0.0162
+free = "$200 credit (not for GPU)"
+mcp = "official, via CLI (daytona mcp start)"
+computesdk = "daytona"
+source = "https://upstash.com/blog/ai-agent-sandbox-providers-compared-2026"
+checked = "2026-11-17"
+
+[sandbox.modal]
+name = "Modal"
+url = "https://modal.com"
+isolation = "gVisor"
+gpu = "yes, up to 8 (T4 to B200/B300)"
+billing = "per-second"
+vcpu_hr = 0.071   # $0.142 per physical core-hr; 1 core = 2 vCPU
+gib_hr = 0.024
+free = "$30/mo credit (card required)"
+mcp = "none (SDK only)"
+computesdk = "modal"
+source = "https://upstash.com/blog/ai-agent-sandbox-providers-compared-2026"
+checked = "2026-11-17"
+
+[sandbox.vercel]
+name = "Vercel Sandbox"
+url = "https://vercel.com/docs/vercel-sandbox"
+isolation = "Firecracker"
+gpu = "no"
+billing = "active CPU only"
+vcpu_hr = 0.128
+gib_hr = 0.0212
+free = "Hobby: 5 active CPU-h/mo"
+mcp = "official (Vercel MCP has sandbox tools)"
+computesdk = "vercel"
+source = "https://upstash.com/blog/ai-agent-sandbox-providers-compared-2026"
+checked = "2026-11-17"
+
+[sandbox.cloudflare]
+name = "Cloudflare Sandbox"
+url = "https://developers.cloudflare.com/sandbox/"
+isolation = "Firecracker microVM"
+gpu = "no"
+billing = "active vCPU; needs $5/mo Workers Paid"
+vcpu_hr = 0.072
+gib_hr = 0.009
+free = "none on Free plan"
+mcp = "Cloudflare MCP"
+computesdk = "cloudflare"
+source = "https://upstash.com/blog/ai-agent-sandbox-providers-compared-2026"
+checked = "2026-11-17"
+
+[sandbox.blaxel]
+name = "Blaxel"
+url = "https://blaxel.ai"
+isolation = "microVM"
+gpu = "no"
+billing = "memory GB-h"
+flat_hr = 0.1656   # $0.0414/GB-h x 4 GB
+shape = "2c4g"
+free = "up to $200 credit"
+mcp = "MCP server per sandbox"
+computesdk = "blaxel"
+source = "https://upstash.com/blog/ai-agent-sandbox-providers-compared-2026"
+checked = "2026-11-17"
+
+[sandbox.freestyle]
+name = "Freestyle"
+url = "https://freestyle.sh"
+isolation = "KVM VM"
+gpu = "no"
+billing = "usage"
+vcpu_hr = 0.04032
+gib_hr = 0.0129
+free = "200 vCPU-h + 400 GiB-h /mo"
+mcp = "?"
+computesdk = "freestyle"
+source = "https://upstash.com/blog/ai-agent-sandbox-providers-compared-2026"
+checked = "2026-11-17"
+
+[sandbox.sprites]
+name = "Fly Sprites"
+url = "https://sprites.dev"
+isolation = "Firecracker microVM"
+gpu = "no"
+billing = "usage"
+vcpu_hr = 0.0385
+gib_hr = 0.021875
+free = "$1 trial credit, 7 days"
+mcp = "?"
+source = "https://upstash.com/blog/ai-agent-sandbox-providers-compared-2026"
+checked = "2026-11-17"
+
+[sandbox.beam]
+name = "Beam"
+url = "https://beam.cloud"
+isolation = "gVisor + runc; microVM opt-in"
+gpu = "yes (A100, H100; full list ?)"
+billing = "pay as you go"
+flat_hr = 0.10    # $0.05/vCPU-h Performance tier, memory price not published
+shape = "2 vCPU, memory not priced"
+free = "Developer $20/mo incl. $20 credit"
+mcp = "?"
+computesdk = "beam"
+source = "https://upstash.com/blog/ai-agent-sandbox-providers-compared-2026"
+checked = "2026-11-17"
+
+[sandbox.northflank]
+name = "Northflank"
+url = "https://northflank.com"
+isolation = "Kata + Cloud Hypervisor; gVisor for GPU"
+gpu = "yes (H100, A100, L4; runs in your own cloud)"
+billing = "per-second"
+flat_hr = 0.0333  # $0.01667/vCPU-h, memory price not published
+shape = "2 vCPU, memory not priced"
+free = "up to $20/mo of resources"
+mcp = "?"
+source = "https://upstash.com/blog/ai-agent-sandbox-providers-compared-2026"
+checked = "2026-11-17"
+
+[sandbox.tensorlake]
+name = "Tensorlake"
+url = "https://tensorlake.ai"
+isolation = "Firecracker / Cloud Hypervisor"
+gpu = "by request"
+billing = "per core-h"
+flat_hr = 0.14    # $0.07/core-h Credits plan, memory price not published
+shape = "2 vCPU, memory not priced"
+free = "1 sandbox, 1 vCPU / 1 GB, 2h sessions"
+mcp = "?"
+computesdk = "tensorlake"
+source = "https://upstash.com/blog/ai-agent-sandbox-providers-compared-2026"
+checked = "2026-11-17"
+
+[sandbox.upstash]
+name = "Upstash Box"
+url = "https://upstash.com/box"
+isolation = "Container"
+gpu = "no"
+billing = "active CPU-h, no memory charge"
+flat_hr = 0.10
+shape = "2c4g"
+free = "10 boxes, 5 CPU-h/mo"
+mcp = "?"
+computesdk = "upstash"
+source = "https://upstash.com/blog/ai-agent-sandbox-providers-compared-2026"
+checked = "2026-11-17"
+
+[sandbox.koyeb]
+name = "Koyeb"
+url = "https://koyeb.com"
+isolation = "microVM on bare metal"
+gpu = "GPU infra yes; in sandboxes ?"
+billing = "hourly per instance"
+flat_hr = 0.0576
+shape = "4 vCPU / 4 GB"
+free = "none for sandboxes"
+mcp = "?"
+source = "https://upstash.com/blog/ai-agent-sandbox-providers-compared-2026"
+checked = "2026-11-17"
+
+[sandbox.agent37]
+name = "Agent37"
+url = "https://www.agent37.com"
+isolation = "gVisor / full VM"
+gpu = "?"
+billing = "per-minute while running, disk while kept"
+flat_hr = 0.006
+shape = "unknown (listed price)"
+free = "?"
+mcp = "?"
+computesdk = "agent37"
+source = "https://orble.tech/sandboxes"
+checked = "2026-11-17"
+note = "Price from Orble's directory (a competitor's listing). Unverified."
+
+[sandbox.orble]
+name = "Orble"
+url = "https://orble.tech"
+isolation = "one VM per box, root"
+gpu = "?"
+billing = "per-second; idle boxes suspend"
+flat_hr = 0.015
+shape = "unknown (listed price)"
+free = "?"
+mcp = "?"
+source = "https://orble.tech/"
+checked = "2026-11-17"
+note = "Vendor's own claim."
+
+[sandbox.instabox]
+name = "InstaBox"
+url = "https://instabox.sh"
+isolation = "Firecracker microVM"
+gpu = "claimed (unverified)"
+billing = "per-second CPU + memory while running; auto-pause ~30 min idle"
+free = "free plan, 1 machine"
+mcp = "?"
+source = "https://rakazo.com/sandboxes/instabox/"
+checked = "2026-11-18"
+note = "By InsForge. Claims Linux/Android/Mac/Windows boxes and 1M+ boxes created. Max ~8h continuous run."
+
+[sandbox.runloop]
+name = "Runloop"
+url = "https://runloop.ai"
+isolation = "VM, custom hypervisor"
+gpu = "no"
+billing = "usage"
+vcpu_hr = 0.108
+gib_hr = 0.0252
+free = "$50 trial"
+mcp = "?"
+status = "winding down (support ended 2026-11-13)"
+source = "https://upstash.com/blog/ai-agent-sandbox-providers-compared-2026"
+checked = "2026-11-17"
+
+# GPU prices gpuhunt does not cover. Price is per GPU-hour, on-demand.
+[[gpu_manual]]
+provider = "modal"
+gpu = "H100"
+vram = 80
+price_gpu_hr = 3.9492   # $0.001097/s
+source = "https://www.spheron.network/blog/best-ai-agent-sandboxes-in-2026-e2b-daytona-modal-and-gpu-sa/"
+checked = "2026-11-17"
+
+[[gpu_manual]]
+provider = "modal"
+gpu = "A100"
+vram = 80
+price_gpu_hr = 2.4984   # $0.000694/s
+source = "https://www.spheron.network/blog/best-ai-agent-sandboxes-in-2026-e2b-daytona-modal-and-gpu-sa/"
+checked = "2026-11-17"
+
+[[gpu_manual]]
+provider = "modal"
+gpu = "B200"
+vram = 192
+price_gpu_hr = 6.2496   # $0.001736/s
+source = "https://www.spheron.network/blog/best-ai-agent-sandboxes-in-2026-e2b-daytona-modal-and-gpu-sa/"
+checked = "2026-11-17"
